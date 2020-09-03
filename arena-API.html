@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+
+<style>
+	#loader {
+		color:  gray;
+	}
+</style>
+
+<body>
+	<span id="loader">Fetching content...</span>
+</body>
+
+	<script>
+		async function fetchFromArena() {
+			const response = await fetch('http://api.are.na/v2/channels/arena-influences/contents')
+			const data = await response.json();
+			return data.contents;
+		}
+
+		function toDOM(array) {
+			let el;
+			let fragment = document.createDocumentFragment();
+			let loader = document.getElementById('loader');
+			array.forEach(function(item) {
+				el = document.createElement('p')
+				el.innerText = item.title;
+				fragment.appendChild(el)
+			});
+			loader.style.display = "none";
+			document.body.appendChild(fragment)
+		}
+
+		fetchFromArena().then(result => toDOM(result))
+	</script>
+</html>
