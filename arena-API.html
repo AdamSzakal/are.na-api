@@ -6,6 +6,9 @@
 </head>
 
 <style>
+	body {
+		font-family: "Inter", sans-serif;
+	}
 	#loader {
 		color:  gray;
 	}
@@ -15,26 +18,26 @@
 	<span id="loader">Fetching content...</span>
 </body>
 
-	<script>
-		async function fetchFromArena() {
-			const response = await fetch('http://api.are.na/v2/channels/arena-influences/contents')
-			const data = await response.json();
-			return data.contents;
-		}
+<script>
+	async function fetchFromArena() {
+		const response = await fetch('http://api.are.na/v2/channels/arena-influences/contents')
+		const data = await response.json();
+		return data.contents;
+	}
 
-		function toDOM(array) {
-			let el;
-			let fragment = document.createDocumentFragment();
-			let loader = document.getElementById('loader');
-			array.forEach(function(item) {
-				el = document.createElement('p')
-				el.innerText = item.title;
-				fragment.appendChild(el)
-			});
-			loader.style.display = "none";
-			document.body.appendChild(fragment)
-		}
+	function to_DOM(array) {
+		let li;
+		let ol = document.createElement('ol')
+		let loader = document.getElementById('loader');
+		array.forEach(function(item) {
+			li = document.createElement('li')
+			li.innerText = item.class + " -> " + item.title;
+			ol.appendChild(li)
+		});
+		loader.style.display = "none";
+		document.body.appendChild(ol)
+	}
 
-		fetchFromArena().then(result => toDOM(result))
-	</script>
+	fetchFromArena().then(result => to_DOM(result))
+</script>
 </html>
